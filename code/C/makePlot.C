@@ -3,15 +3,17 @@
 //
 //    root makePlot.C
 //
-// [needs internet connection to download the data] 
+// [default way to run the script, will download anything it needs] 
 //
 // --- other options
+//
 // a) compile it with ACLiC use
 //      root makePlot.C++
 //
 // b) compile with g++, uncomment the last line in this file having the "int main()  ... "
 //    and run this in your command prompt 
 //      g++  makePlot.C -o makePlot.exe `root-config --glibs --cflags`
+//      ./makePlot.exe
 //
 // This program produces a histogram of the muon multiplicity 
 // as well as the output below

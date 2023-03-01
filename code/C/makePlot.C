@@ -1,5 +1,5 @@
 // written by Konstantinos Theofilatos 27.11.2022 
-// run it as ROOT scipt in CINT (ROOT's interpreter) 
+// Default way to run this is as ROOT scipt, running this from the command line
 //
 //    root makePlot.C
 //

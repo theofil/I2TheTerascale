@@ -13,3 +13,13 @@ It is **highly recommended** to:
 
 If your laptop is Windows-only, you might find useful also to look the  [ROOT_Windows_InstallationFromSource.pdf](https://github.com/theofil/I2TheTerascale/blob/main/docs/ROOT_Windows_InstallationFromSource.pdf) in case you have hard time following the official instructions of [https://root.cern/install/](https://root.cern/install/).
 
+Once you finished with installing ROOT, try to run `makePlot.C` or the `simple.C` ROOT macros. In linux, you can simply c&p the following commands:
+
+    wget https://github.com/theofil/I2TheTerascale/archive/refs/heads/main.zip
+    unzip main.zip 
+    cd I2TheTerascale-main/code/C/
+    root makePlot.C # try the one below if this doesn't work 
+  	root simple.C 
+
+
+In Windows you will need to download the [code](https://github.com/theofil/I2TheTerascale/archive/refs/heads/main.zip), unzip it and then go to the command line, cd to the folder you have unzipped the `main.zip` and execute `simple.C` or `makePlot.C` in the command line.

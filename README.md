@@ -25,4 +25,4 @@ If `makePlot.C` doesn't work as expected, please try instead the command `root s
 In Windows you will need to download the [code](https://github.com/theofil/I2TheTerascale/archive/refs/heads/main.zip), unzip it and then go to the command line, cd to the folder you have unzipped the `main.zip` and execute `simple.C` or `makePlot.C` in the command line.
 
 ## Tutorial's Poll 
-In case asked, open the poll using [this link](https://docs.google.com/forms/d/1Vb9CuI9DfMVLXxJmNlmjeagPY1PIPEH_4qfvYmJ6Rrg/prefill)
+In case asked, open the poll using [this link](https://docs.google.com/forms/d/e/1FAIpQLSd3YB2VIpUht9CX7__UtSyVrzCRYc4_j4TDPriOjXb4qwPbuQ/viewform?usp=pp_url&entry.1665379118=A)

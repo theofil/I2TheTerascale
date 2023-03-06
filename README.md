@@ -23,3 +23,6 @@ Once you finished with installing ROOT, try to run `makePlot.C` or the `simple.C
 If `makePlot.C` doesn't work as expected, please try instead the command `root simple.C`
 
 In Windows you will need to download the [code](https://github.com/theofil/I2TheTerascale/archive/refs/heads/main.zip), unzip it and then go to the command line, cd to the folder you have unzipped the `main.zip` and execute `simple.C` or `makePlot.C` in the command line.
+
+## Tutorial's Poll 
+In case asked, open the poll using [this link](https://docs.google.com/forms/d/1Vb9CuI9DfMVLXxJmNlmjeagPY1PIPEH_4qfvYmJ6Rrg/prefill)

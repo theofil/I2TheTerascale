@@ -27,6 +27,7 @@ In Windows you will need to download the [code](https://github.com/theofil/I2The
 ## Tutorial's Links 
 * In case asked, open the poll using [this link](https://docs.google.com/forms/d/e/1FAIpQLSd3YB2VIpUht9CX7__UtSyVrzCRYc4_j4TDPriOjXb4qwPbuQ/viewform?usp=pp_url&entry.1665379118=A)
 * [Zoom](https://cern.zoom.us/j/66278363052?pwd=WEx6aU9DcnBtck5DQnA1c2l5NTdoQT09)
+* Physical location of the ROOT files [http://theofil.web.cern.ch/theofil/cmsod/files](http://theofil.web.cern.ch/theofil/cmsod/files)
 
 ## SSH connections
 ### Linux/MacOSX
@@ -64,4 +65,5 @@ Use one of these links:
 * https://naf-school06.desy.de:3389/
 
 in your web browser, launch a new `xfce` session 
+
 

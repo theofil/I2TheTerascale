@@ -35,7 +35,7 @@ In Windows you will need to download the [code](https://github.com/theofil/I2The
 ### Linux/MacOSX
 First connect to one of the  naf-schoolXX.desy.de
 
-`ssh -X school07@naf-school03.desy` 
+`ssh -X school07@naf-school03.desy.de` 
 
 or with `-Y` for MacOSX.
 
@@ -48,7 +48,7 @@ with numbering `naf-school[01-06]`
 ### Windows
 First install [putty](https://www.putty.org) and [xming](https://sourceforge.net/projects/xming/)
 
-Then connect to one of the naf servers, e.g., `school07@naf-school03.desy` 
+Then connect to one of the naf servers, e.g., `school07@naf-school03.desy.de` 
 
 Then open a second ssh connection to 
 

@@ -56,7 +56,7 @@ Then open a second ssh connection to
 
 with numbering `naf-school[01-06]`
 
-### Web based sshh
+### Web based ssh
 Use one of these links:
 
 * https://naf-school01.desy.de:3389/

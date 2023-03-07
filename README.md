@@ -27,3 +27,41 @@ In Windows you will need to download the [code](https://github.com/theofil/I2The
 ## Tutorial's Links 
 * In case asked, open the poll using [this link](https://docs.google.com/forms/d/e/1FAIpQLSd3YB2VIpUht9CX7__UtSyVrzCRYc4_j4TDPriOjXb4qwPbuQ/viewform?usp=pp_url&entry.1665379118=A)
 * [Zoom](https://cern.zoom.us/j/66278363052?pwd=WEx6aU9DcnBtck5DQnA1c2l5NTdoQT09)
+
+## SSH connections
+### Linux/MacOSX
+First connect to one of the  naf-schoolXX.desy.de
+
+`ssh -X school07@naf-school03.desy` 
+
+or with `-Y` for MacOSX.
+
+Then open a second ssh connection to 
+
+`ssh naf-school01` 
+
+with numbering `naf-school[01-06]`
+
+### Windows
+First install [putty](https://www.putty.org) and [xming](https://sourceforge.net/projects/xming/)
+
+Then connect to one of the naf servers, e.g., `school07@naf-school03.desy` 
+
+Then open a second ssh connection to 
+
+`ssh naf-school01` 
+
+with numbering `naf-school[01-06]`
+
+### Web based sshh
+Use one of these links:
+
+* https://naf-school01.desy.de:3389/
+* https://naf-school02.desy.de:3389/
+* https://naf-school03.desy.de:3389/
+* https://naf-school04.desy.de:3389/
+* https://naf-school05.desy.de:3389/
+* https://naf-school06.desy.de:3389/
+
+in your web browser, launch a new `xfce` session 
+

@@ -68,8 +68,12 @@ Use one of these links:
 
 in your web browser, launch a new `xfce` session 
 
-### Projects 
+## Projects 
 Subscribe to your favorite projects here: 
 
 https://docs.google.com/document/d/1Z_xx5K6h5KUtsWiVvLTuna1djStJJu0fXyMTc8QZnzk/edit?usp=sharing
+
+## ZOOM 
+
+https://cern.zoom.us/j/66278363052?pwd=WEx6aU9DcnBtck5DQnA1c2l5NTdoQT09
 

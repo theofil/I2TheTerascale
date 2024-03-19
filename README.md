@@ -54,19 +54,6 @@ Then open a second ssh connection to
 
 with numbering `naf-school[01-06]`
 
-### Windows/Web based ssh
-Use one of these links:
-
-* https://naf-school01.desy.de:3389/
-* https://naf-school02.desy.de:3389/
-* https://naf-school03.desy.de:3389/
-* https://naf-school04.desy.de:3389/
-* https://naf-school05.desy.de:3389/
-* https://naf-school06.desy.de:3389/
-
-in your web browser, launch a new `xfce` session 
-
-
 ## Tutorial's Links 
 * In case asked, open the poll using [this link](https://docs.google.com/forms/d/e/1FAIpQLSd3YB2VIpUht9CX7__UtSyVrzCRYc4_j4TDPriOjXb4qwPbuQ/viewform?usp=pp_url&entry.1665379118=A)
 * [Zoom](https://cern.zoom.us/j/66658277521?pwd=U0lIOEJrL0VCT2c5THJOcGNkUzZLdz09)

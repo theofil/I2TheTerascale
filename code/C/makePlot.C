@@ -64,7 +64,8 @@ string files[]  = {"data.root", "qcd.root", "wjets.root", "single_top.root", "ww
 string labels[] = {"Data", "QCD", "WJets", "Single Top", "WW", "TTbar", "WZ", "ZZ",  "DY"};
 int fillColors[] ={  1   , 6    , 3      , 4           , 9   , 2      , 7   , 8   , 5};
 int lineColors[] ={  1   , 6    , 3      , 4           , 9   , 2      , 7   , 8   , 5};
-string path = "http://theofil.web.cern.ch/theofil/cmsod/files/";
+//string path = "http://theofil.web.cern.ch/theofil/cmsod/files/";
+string path = "~/files/I2TheTerascale/";
 
 // pointers to TFile and TTrees
 TFile *fp[nFiles];

@@ -40,6 +40,9 @@ In case you don't manage to get ROOT working in your laptop, connect via SSH to 
 Then connect to one of the naf servers, e.g., `school07@naf-school03.desy.de`, with numbering `naf-school[01-06]`. When you launch the SSH connection **make sure you enable the X11 forwarding**.
 See detailed instructions [here](docs/SSH_X11_Forwarding_on_Windows_with_Putty.pdf).
 
+### Binder
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/theofil/I2TheTerascale/main/main)
+
 
 ### Linux/MacOSX SSH
 First connect to one of the  naf-schoolXX.desy.de

@@ -41,7 +41,7 @@ Then connect to one of the naf servers, e.g., `school07@naf-school03.desy.de`, w
 See detailed instructions [here](docs/SSH_X11_Forwarding_on_Windows_with_Putty.pdf).
 
 ### Binder
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/theofil/I2TheTerascale/main/main)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/theofil/I2TheTerascale/main)
 
 
 ### Linux/MacOSX SSH

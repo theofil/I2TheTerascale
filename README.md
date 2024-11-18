@@ -30,7 +30,7 @@ If `makePlot.C` doesn't work as expected, please try instead the command `root -
 
 In Windows you will need to download the [code](https://github.com/theofil/I2TheTerascale/archive/refs/heads/main.zip), unzip it and then go to the command line, cd to the folder you have unzipped the `main.zip` and execute `root -l simple.C` or `root -l makePlot.C` in the command line.
 
-### Windows/Putty/SSH 
+### Putty/SSH 
 In case you don't manage to get ROOT working in your laptop, connect via SSH to a remote server to do the tutorial. For this you will need three things:
 
  1. [putty](https://www.putty.org) 

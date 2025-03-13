@@ -25,6 +25,18 @@ In linux, you can simply c&p the following commands:
 
 If `makePlot.C` doesn't work as expected, please try instead the command `root -l simple.C`. The physical location of the ROOT files is here: [http://theofil.web.cern.ch/theofil/cmsod/files](http://theofil.web.cern.ch/theofil/cmsod/files)
 
+In case you get
+
+    Error in <TWebFile::TWebFile>: http://theofil.web.cern.ch:80/theofil/cmsod/files/data.root? does not exist
+
+it's because ROOT requires the netx plugin to read remote files. In some installations of ROOT, netx plugin might be missing.
+
+If you don't have ROOT with ability to read remote files, download the offline version of the tutorial using the following commands:
+
+    wget https://theofil.web.cern.ch/cmsod/I2TheTerascaleOffline.zip
+    unzip I2TheTerascaleOffline.zip
+    cd I2TheTerascaleOffline/I2TheTerascale/code/C
+    root -l makePlot.C
 
 ### Windows
 

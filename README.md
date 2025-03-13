@@ -136,9 +136,9 @@ It’s not required to read all the documentation before coming to school. Howev
 [Main Documentation (PDF)](https://github.com/theofil/I2TheTerascale/raw/main/docs/main.pdf)
 
 ## Tutorial's Links 
-* In case asked, open the poll using [this link](https://docs.google.com/forms/d/e/1FAIpQLSd3YB2VIpUht9CX7__UtSyVrzCRYc4_j4TDPriOjXb4qwPbuQ/viewform?usp=pp_url&entry.1665379118=A)
-* [Zoom](https://cern.zoom.us/j/66658277521?pwd=U0lIOEJrL0VCT2c5THJOcGNkUzZLdz09)
+* In case asked, open the poll using [this link](https://docs.google.com/document/d/1eR6FhVAyxgN899ztVJWdtplGr__nc49LxGnIi53dcog/edit?usp=sharing)
+* [Zoom](https://cern.zoom.us/j/67301485054?pwd=DLFGPQQa85AmGVrabSqSuE4FpUa3P3.1)
 
 ## Projects 
-Subscribe to your favorite projects here: 
+Subscribe to your favorite projects [here](https://cern.zoom.us/j/67301485054?pwd=DLFGPQQa85AmGVrabSqSuE4FpUa3P3.1). 
 

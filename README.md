@@ -141,5 +141,6 @@ It’s not required to read all the documentation before coming to school. Howev
 
 ## Projects 
 Subscribe to your favorite projects [here](https://docs.google.com/document/d/1eR6FhVAyxgN899ztVJWdtplGr__nc49LxGnIi53dcog/edit?usp=sharing). 
-send your slides here: konstantinos.theofilatos@cern.ch
+
+Send your slides here: konstantinos.theofilatos@cern.ch
 

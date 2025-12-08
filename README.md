@@ -56,27 +56,7 @@ In case of problems, please use Google, YouTube, ChatGPT, DeepSeek, etc., to fin
 
 Assuming that you installed ROOT, open your terminal (command line) and run the following commands:
 
-```bash
-wget https://github.com/theofil/I2TheTerascale/archive/refs/heads/main.zip
-unzip main.zip 
-cd I2TheTerascale-main/code/C/
-root -l makePlot.C 
 ```
-
-If the script runs successfully, you should be able to see this figure.
-
-**Note:** Your ROOT installation must allow external connections (some environments might block this for security reasons).
-
-### Troubleshooting Remote File Access
-If you get the following error:
-
-```
-Error in <TWebFile::TWebFile>: http://theofil.web.cern.ch:80/theofil/cmsod/files/data.root? does not exist
-```
-
-It’s because ROOT requires the `netx` plugin to read remote files. Some ROOT installations might be missing the `netx` plugin. If your ROOT cannot read remote files, download the offline version of the tutorial using the following commands:
-
-```bash
 wget https://theofil.web.cern.ch/cmsod/I2TheTerascaleOffline.zip
 unzip I2TheTerascaleOffline.zip
 cd I2TheTerascaleOffline/I2TheTerascale/code/C

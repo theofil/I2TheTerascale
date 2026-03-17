@@ -63,7 +63,7 @@ cd I2TheTerascaleOffline/I2TheTerascale/code/C
 root -l makePlot.C
 ```
 
-If the above steps don’t work, attempt to resolve the issue yourself. If you’re unable to find a solution, try creating a simple program by copying and pasting the code from `pre-school-exercise.C` into a local file on your computer using a text editor (e.g., nano, vim, emacs, etc.).
+If the above steps don’t work, attempt to resolve the issue yourself. If you’re unable to find a solution, try creating a simple program by copying and pasting the code from `pre-school-exercise.C` into a local file on your computer using a text editor (e.g., gedit, nano, vim, emacs, etc.).
 
 Then open your terminal, move to the folder where the file is located:
 

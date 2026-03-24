@@ -117,7 +117,7 @@ It’s not required to read all the documentation before coming to school. Howev
 
 ## Tutorial's Links 
 * In case asked, open the poll using [this link]()
-* [Zoom](https://cern.zoom.us/j/67301485054?pwd=DLFGPQQa85AmGVrabSqSuE4FpUa3P3.1)
+* [Zoom](https://cern.zoom.us/j/61879069552?pwd=Ncn6FarkNOmVIeUegC9R5CaSkkRD3n.1)
 
 ## Projects 
 Subscribe to your favorite projects [here](https://docs.google.com/document/d/1eR6FhVAyxgN899ztVJWdtplGr__nc49LxGnIi53dcog/edit?usp=sharing). 

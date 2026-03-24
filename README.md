@@ -40,7 +40,7 @@ We recommend installing Linux on your Windows laptop (either as a dual boot—at
 #### Virtual machine
 Try the instructions prepared by another student who successfully completed the process:
 
-[ROOT Windows 2025 Instructions](https://github.com/theofil/I2TheTerascale/raw/main/docs/ROOT_Windows_2025.pdf)
+[ROOT Windows 2026 Instructions](https://github.com/theofil/I2TheTerascale/raw/main/docs/ROOT_Windows_2026.pdf)
 
 #### Dual boot (Windows / Linux)
 1. First, back up your data.

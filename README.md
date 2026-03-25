@@ -120,7 +120,7 @@ It’s not required to read all the documentation before coming to school. Howev
 * [Zoom](https://cern.zoom.us/j/61879069552?pwd=Ncn6FarkNOmVIeUegC9R5CaSkkRD3n.1)
 
 ## Projects 
-Subscribe to your favorite projects [here](https://docs.google.com/document/d/1eR6FhVAyxgN899ztVJWdtplGr__nc49LxGnIi53dcog/edit?usp=sharing). 
+Subscribe to your favorite projects [here](https://docs.google.com/document/d/1TGsBdPi7O4cCJkQidipeBA4hqWg-DXb5DWlvcAv3sxM/edit?usp=sharing). 
 
 Send your slides here: konstantinos.theofilatos@cern.ch
 

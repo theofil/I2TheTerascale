@@ -1,5 +1,5 @@
 // written by Konstantinos Theofilatos 27.11.2022 
-// run it as ROOT scipt in CINT (ROOT's interpreter) 
+// run it as ROOT script in Cling (ROOT's interpreter)
 //
 //    root simple.C
 //
@@ -11,7 +11,7 @@
 //
 // b) compile with g++, uncomment the last line in this file having the "int main()  ... "
 //    and run this in your command prompt 
-//      g++  simple.C -o makePlot.exe `root-config --glibs --cflags`
+//      g++  simple.C -o simple.exe `root-config --glibs --cflags`
 
 #include <iostream>
 
@@ -26,6 +26,7 @@ TFile *fp;
 using namespace std;
 
 //Declaration of leaves types
+// array sizes must be at least the largest NJet, NMuon, NElectron, NPhoton in any sample (10, 4, 3, 3)
 Int_t           NJet;
 Float_t         Jet_Px[10];
 Float_t         Jet_Py[10];
@@ -34,25 +35,25 @@ Float_t         Jet_E[10];
 Float_t         Jet_btag[10];
 Bool_t          Jet_ID[10];
 Int_t           NMuon;
-Float_t         Muon_Px[3];
-Float_t         Muon_Py[3];
-Float_t         Muon_Pz[3];
-Float_t         Muon_E[3];
-Int_t           Muon_Charge[3];
-Float_t         Muon_Iso[3];
+Float_t         Muon_Px[4];
+Float_t         Muon_Py[4];
+Float_t         Muon_Pz[4];
+Float_t         Muon_E[4];
+Int_t           Muon_Charge[4];
+Float_t         Muon_Iso[4];
 Int_t           NElectron;
-Float_t         Electron_Px[2];
-Float_t         Electron_Py[2];
-Float_t         Electron_Pz[2];
-Float_t         Electron_E[2];
-Int_t           Electron_Charge[2];
-Float_t         Electron_Iso[2];
+Float_t         Electron_Px[3];
+Float_t         Electron_Py[3];
+Float_t         Electron_Pz[3];
+Float_t         Electron_E[3];
+Int_t           Electron_Charge[3];
+Float_t         Electron_Iso[3];
 Int_t           NPhoton;
-Float_t         Photon_Px[2];
-Float_t         Photon_Py[2];
-Float_t         Photon_Pz[2];
-Float_t         Photon_E[2];
-Float_t         Photon_Iso[2];
+Float_t         Photon_Px[3];
+Float_t         Photon_Py[3];
+Float_t         Photon_Pz[3];
+Float_t         Photon_E[3];
+Float_t         Photon_Iso[3];
 Float_t         MET_px;
 Float_t         MET_py;
 Float_t         MChadronicBottom_px;
@@ -137,22 +138,33 @@ void init()
 
 void simple()
 {
-    fp = TFile::Open("http://theofil.web.cern.ch/theofil/cmsod/files/data.root", "READ");
+    const char *url = "http://theofil.web.cern.ch/theofil/cmsod/files/data.root";
+    fp = TFile::Open(url, "READ");
+    if (!fp || fp->IsZombie())
+    {
+        cout << "ERROR: could not open " << url << " (check your internet connection)" << endl;
+        return;
+    }
     events = (TTree*)fp->Get("events");
+    if (!events)
+    {
+        cout << "ERROR: no TTree called \"events\" in " << url << endl;
+        return;
+    }
     init();
-  
-    unsigned int nEvents = events -> GetEntriesFast();
+
+    Long64_t nEvents = events -> GetEntries();
 
     int counts = 0;
 
-    for(unsigned int i = 0 ; i<nEvents ; ++i)
+    for(Long64_t i = 0 ; i<nEvents ; ++i)
     {
-	events->GetEntry(i);
+        events->GetEntry(i);
         // cout << NMuon << ", " << NJet << endl;
 
-	if (NMuon == 2 && NJet >= 2)  // analysis cuts
-	{
-	    counts = counts + 1;
+        if (NMuon == 2 && NJet >= 2)  // analysis cuts
+        {
+            counts = counts + 1;
         }
     }
 

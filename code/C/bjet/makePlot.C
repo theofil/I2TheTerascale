@@ -1,5 +1,5 @@
 // written by Konstantinos Theofilatos 27.11.2022 
-// run it as ROOT scipt in CINT (ROOT's interpreter) 
+// run it as ROOT script in Cling (ROOT's interpreter)
 // [needs internet connection to download the data] 
 //
 //    root makePlot.C
@@ -13,6 +13,8 @@
 //      g++  makePlot.C -o makePlot.exe `root-config --glibs --cflags`
 //
 
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <stdio.h>
 #include <string>
@@ -41,8 +43,9 @@ string xlabel   = "number of b-jets";
 bool setLogy    = true; // log scale for y-axis
 
 // configuration
-#define nFiles  9
-float fraction = 1; // fraction of events to proccess for each sample
+const int nFiles = 9;
+float fraction = 1; // fraction of events to process for each sample
+float bTagCut  = 1.74; // a jet with Jet_btag above this value counts as a b-jet
 string files[]  = {"data.root", "qcd.root", "wjets.root", "single_top.root", "ww.root", "ttbar.root",  "wz.root", "zz.root", "dy.root"};
 string labels[] = {"Data", "QCD", "WJets", "Single Top", "WW", "TTbar", "WZ", "ZZ",  "DY"};
 int fillColors[] ={  1   , 6    , 3      , 4           , 9   , 2      , 7   , 8   , 5};
@@ -54,6 +57,7 @@ TFile *fp[nFiles];
 TTree *events[nFiles];
 
 // variables stored in the root tree, you can access them during the event loop
+// array sizes must be at least the largest NJet, NMuon, NElectron, NPhoton in any sample (10, 4, 3, 3)
 Int_t           NJet;
 Float_t         Jet_Px[10];
 Float_t         Jet_Py[10];
@@ -62,19 +66,19 @@ Float_t         Jet_E[10];
 Float_t         Jet_btag[10];
 Bool_t          Jet_ID[10];
 Int_t           NMuon;
-Float_t         Muon_Px[3];
-Float_t         Muon_Py[3];
-Float_t         Muon_Pz[3];
-Float_t         Muon_E[3];
-Int_t           Muon_Charge[3];
-Float_t         Muon_Iso[3];
+Float_t         Muon_Px[4];
+Float_t         Muon_Py[4];
+Float_t         Muon_Pz[4];
+Float_t         Muon_E[4];
+Int_t           Muon_Charge[4];
+Float_t         Muon_Iso[4];
 Int_t           NElectron;
-Float_t         Electron_Px[2];
-Float_t         Electron_Py[2];
-Float_t         Electron_Pz[2];
-Float_t         Electron_E[2];
-Int_t           Electron_Charge[2];
-Float_t         Electron_Iso[2];
+Float_t         Electron_Px[3];
+Float_t         Electron_Py[3];
+Float_t         Electron_Pz[3];
+Float_t         Electron_E[3];
+Int_t           Electron_Charge[3];
+Float_t         Electron_Iso[3];
 Int_t           NPhoton;
 Float_t         Photon_Px[3];
 Float_t         Photon_Py[3];
@@ -106,7 +110,7 @@ Int_t           NPrimaryVertices;
 Bool_t          triggerIsoMu24;
 Float_t         EventWeight;
 
-// pointers to histograms, stack, canvas and legenend
+// pointers to histograms, stack, canvas and legend
 TH1F *histo[nFiles];  
 THStack *hs; 
 TCanvas *can;
@@ -114,7 +118,7 @@ TLegend *leg;
 TH1F   *h_mc; //last one is for the sum of all MCs
 
 
-// setTDRStyle and init declared here, implementated in the end of this file
+// setTDRStyle and init declared here, implemented in the end of this file
 void setTDRStyle(); 
 void init(TTree *events); 
 
@@ -123,7 +127,7 @@ void init(TTree *events);
 Double_t counts[nFiles+1]; // last is for all MCs summed
 Double_t countsError[nFiles+1]; 
 
-// this function is executed when running from prompt: root makeHist.C
+// this function is executed when running from prompt: root makePlot.C
 void makePlot()
 {    
     // set style for the plots
@@ -148,16 +152,28 @@ void makePlot()
     for(int i = 0; i < nFiles; ++i) 
     {
         // open root file i, "get" the root ttrees from inside 
-	cout <<"opening "<< files[i] << " from path " << path << endl;   
+        cout <<"opening "<< files[i] << " from path " << path << endl;   
 
-     	fp[i] = TFile::Open( (path + files[i]).c_str() , "READ"); 
-	events[i] = (TTree*)fp[i]->Get("events"); 
-	init(events[i]); 
-  
+        string url = path + files[i];
+        fp[i] = TFile::Open(url.c_str(), "READ");
+        if (!fp[i] || fp[i]->IsZombie())
+        {
+            cout << "ERROR: could not open " << url << " (check your internet connection and the path)" << endl;
+            return;
+        }
+        events[i] = (TTree*)fp[i]->Get("events");
+        if (!events[i])
+        {
+            cout << "ERROR: no TTree called \"events\" in " << url << endl;
+            return;
+        }
+        init(events[i]);
+
 
         // create TH1F histogram for the file i
-        auto histoName = (plotName + "_" + to_string(i)).c_str();
-        histo[i] = new TH1F(histoName, histoName, nBins, xMin, xMax);
+        string histoName = plotName + "_" + to_string(i);
+        histo[i] = new TH1F(histoName.c_str(), histoName.c_str(), nBins, xMin, xMax);
+        histo[i]->SetDirectory(nullptr); // keep the histogram alive even if the file is closed
         histo[i]->Sumw2();
         histo[i]->SetFillColor(fillColors[i]);
         histo[i]->SetLineColor(lineColors[i]);
@@ -168,32 +184,33 @@ void makePlot()
 
         // if i!= 0 add histogram to the MC histogram stack, else treat it as data (i == 0)
         if (i != 0){hs->Add(histo[i]); leg->AddEntry(histo[i], labels[i].c_str(), "fl");}
-	if (i == 0){histo[i]->SetFillStyle(0); histo[i]->SetFillColor(0);leg->AddEntry(histo[i], labels[i].c_str(), "pe");}
+        if (i == 0){histo[i]->SetFillStyle(0); histo[i]->SetFillColor(0);leg->AddEntry(histo[i], labels[i].c_str(), "pe");}
 
         // see how many entries (unweighted events) the tree has
-	Long64_t nEvents = Long64_t(fraction*events[i]->GetEntriesFast());
+        Long64_t nEvents = Long64_t(fraction*events[i]->GetEntries());
         cout <<"analyzing " << nEvents << " unweighted events of " << labels[i] << endl;
         
         // --------- the magic starts here --------- // 
         // event loop -- j index
-	for(Long64_t j = 0 ; j<nEvents ; ++j)
-	{
-	    events[i]->GetEntry(j); 
+        for(Long64_t j = 0 ; j<nEvents ; ++j)
+        {
+            events[i]->GetEntry(j); 
 
             // by default the event will be rejected, unless it qualifies the desired selection below
             bool selection = false;
             float var = 0;
           
             // define selection (analysis cuts) and the variable to be filled in the histogram
-            if(triggerIsoMu24 && NMuon == 1) 
-            if(pow(Muon_Px[0]*Muon_Px[0] + Muon_Py[0]*Muon_Py[0], 0.5)>25) 
+            // exactly one muon with transverse momentum above 25 GeV
+            if(triggerIsoMu24 && NMuon == 1 && std::hypot(Muon_Px[0], Muon_Py[0]) > 25)
             {
-                selection = true; 
+                selection = true;
                 int NBJet = 0;
-                for(int jetIndex = 0; jetIndex < NJet; jetIndex++) 
+                int nJets = std::min(NJet, 10); // the Jet_* arrays hold at most 10 jets
+                for(int jetIndex = 0; jetIndex < nJets; jetIndex++)
                 {
-                     if(Jet_btag[jetIndex] > 1.74)NBJet += 1; 
-		}
+                     if(Jet_btag[jetIndex] > bTagCut) NBJet += 1;
+                }
               
                   
                 var       = float(NBJet);
@@ -201,8 +218,8 @@ void makePlot()
 
             // apply selection and fill the histogram with the computed variable taking into account the event weight
             if(selection) histo[i]->Fill(var, EventWeight);
-	         
-	} 
+                 
+        } 
         // --------- the magic ends here --------- // 
 
        if(i !=0 ) h_mc->Add(histo[i]); // add histo to h_mc if it's not data histo
@@ -211,6 +228,9 @@ void makePlot()
 
     // draw and save plot
     can->cd();
+    // make the y-axis range fit both data and MC (more room on log scale)
+    double yMax = std::max(histo[0]->GetMaximum(), h_mc->GetMaximum());
+    histo[0]->SetMaximum(setLogy ? 10*yMax : 1.5*yMax);
     histo[0]->Draw("e1");
     hs->Draw("hist same");    
     h_mc->Draw("hist same");
@@ -218,29 +238,29 @@ void makePlot()
     histo[0]->Draw("e1 same");
     histo[0]->Draw("axis same");
     if(setLogy) can->SetLogy();
-    auto fileName_png = (plotName + ".png").c_str();
-    auto fileName_pdf = (plotName + ".pdf").c_str();
-    can->SaveAs(fileName_pdf);
-    can->SaveAs(fileName_png);
+    string fileName_png = plotName + ".png";
+    string fileName_pdf = plotName + ".pdf";
+    can->SaveAs(fileName_pdf.c_str());
+    can->SaveAs(fileName_png.c_str());
 
 
    // print summary statistics for data and the sum of all MCs
    cout << "###########################" <<endl;
-   int i = 0;
-   counts[i] = histo[i]->IntegralAndError(0, histo[i]->GetNbinsX()+1, countsError[i]); // number of weighted events and their error
-   printf("%s :  %2.1f ± %2.1f \n", labels[i].c_str(), counts[i], countsError[i]);
-   
-   i = nFiles + 1;
-   counts[i] = h_mc->IntegralAndError(0, h_mc->GetNbinsX()+1, countsError[i]); // number of weighted events and their error
-   printf("%s :  %2.1f ± %2.1f \n", "MC  ", counts[i], countsError[i]);
+   int iData = 0;
+   counts[iData] = histo[iData]->IntegralAndError(0, histo[iData]->GetNbinsX()+1, countsError[iData]); // number of weighted events and their error
+   printf("%s :  %2.1f ± %2.1f \n", labels[iData].c_str(), counts[iData], countsError[iData]);
+
+   int iMC = nFiles; // last element of counts[] is for all MCs summed
+   counts[iMC] = h_mc->IntegralAndError(0, h_mc->GetNbinsX()+1, countsError[iMC]); // number of weighted events and their error
+   printf("%s :  %2.1f ± %2.1f \n", "MC  ", counts[iMC], countsError[iMC]);
   
    cout << "###########################" <<endl;
    // print out statistics for each MC
    for (int i = 1; i < nFiles; ++i) 
    {
-	countsError[i]=0;
-	counts[i] = histo[i]->IntegralAndError(0, histo[i]->GetNbinsX()+1, countsError[i]); // number of weighted events and their error
-	printf("%s :  %2.1f ± %2.1f \n", labels[i].c_str(), counts[i], countsError[i]);
+        countsError[i]=0;
+        counts[i] = histo[i]->IntegralAndError(0, histo[i]->GetNbinsX()+1, countsError[i]); // number of weighted events and their error
+        printf("%s :  %2.1f ± %2.1f \n", labels[i].c_str(), counts[i], countsError[i]);
    }
 
 }
@@ -318,7 +338,7 @@ void setTDRStyle()
   tdrStyle->SetCanvasColor(kWhite);
   tdrStyle->SetCanvasDefH(600); //Height of canvas
   tdrStyle->SetCanvasDefW(600); //Width of canvas
-  tdrStyle->SetCanvasDefX(0);   //POsition on screen
+  tdrStyle->SetCanvasDefX(0);   //Position on screen
   tdrStyle->SetCanvasDefY(0);
 
   // For the Pad:

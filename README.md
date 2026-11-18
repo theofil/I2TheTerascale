@@ -1,9 +1,9 @@
 # I2TheTerascale
 Here you will find the [code](https://github.com/theofil/I2TheTerascale/tree/main/code) & [documentation](https://github.com/theofil/I2TheTerascale/raw/main/docs/main.pdf) from the [Introduction to the Terascale](https://indico.desy.de/event/33888/) tutorial given at DESY. 
 
-The bulk of the exercises will be based on ROOT and C++. Having it installed in your local computer has the advantage of keeping the software ready to be used for other purposes, after the schools ends.
+The bulk of the exercises will be based on ROOT and C++. Having it installed in your local computer has the advantage of keeping the software ready to be used for other purposes, after the school ends.
 
-Should  time allows, we might see also examples of how to do similar things using columnar-style of analysis with python and jupiter notebooks, without using ROOT/C++. 
+Should time allow, we might see also examples of how to do similar things using columnar-style of analysis with python and Jupyter notebooks, without using ROOT/C++. 
 
 ## Before the tutorial 
 
@@ -12,9 +12,9 @@ It is **highly recommended** to:
 * Read as much as you can from the most recent version of the [documentation](https://github.com/theofil/I2TheTerascale/raw/main/docs/main.pdf).
 
 
-If your laptop is Windows-only and you have hard time following the official instructions of [https://root.cern/install/](https://root.cern/install/), please use Google, Youtube, ChatGPT to find solutions to the error messages you are getting to your screen.
+If your laptop is Windows-only and you have a hard time following the official instructions of [https://root.cern/install/](https://root.cern/install/), please use Google, Youtube, ChatGPT to find solutions to the error messages you are getting to your screen.
 
-Once you finished with installing ROOT, try to run `makePlot.C` or the `simple.C` ROOT macros. 
+Once you have finished with installing ROOT, try to run `makePlot.C` or the `simple.C` ROOT macros. 
 
 ## Installing ROOT
 
@@ -63,7 +63,9 @@ cd I2TheTerascaleOffline/I2TheTerascale/code/C
 root -l makePlot.C
 ```
 
-If the above steps don’t work, attempt to resolve the issue yourself. If you’re unable to find a solution, try creating a simple program by copying and pasting the code from `pre-school-exercise.C` into a local file on your computer using a text editor (e.g., gedit, nano, vim, emacs, etc.).
+On macOS, where `wget` is not installed by default, use `curl -LO https://theofil.web.cern.ch/cmsod/I2TheTerascaleOffline.zip` instead.
+
+If the above steps don’t work, attempt to resolve the issue yourself. If you’re unable to find a solution, try creating a simple program by copying and pasting the code from [`pre-school-exercise.C`](code/C/pre-school-exercise.C) into a local file on your computer using a text editor (e.g., gedit, nano, vim, emacs, etc.).
 
 Then open your terminal, move to the folder where the file is located:
 
@@ -100,7 +102,7 @@ First connect to one of the  naf-schoolXX.desy.de
 
 `ssh -X school07@naf-school03.desy.de` 
 
-or with `-Y` for MacOSX.
+or with `-Y` for MacOSX. On macOS, X11 forwarding needs [XQuartz](https://www.xquartz.org) to be installed.
 
 Then open a second ssh connection to 
 
@@ -116,7 +118,6 @@ It’s not required to read all the documentation before coming to school. Howev
 [Main Documentation (PDF)](https://github.com/theofil/I2TheTerascale/raw/main/docs/main.pdf)
 
 ## Tutorial's Links 
-* In case asked, open the poll using [this link]()
 * [Zoom](https://cern.zoom.us/j/61879069552?pwd=Ncn6FarkNOmVIeUegC9R5CaSkkRD3n.1)
 
 ## Projects 

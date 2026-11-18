@@ -14,7 +14,7 @@ for (int i = 0; i < 1000; i++) {
 
 cout << "Mean: "    << histo->GetMean()   << endl;
 cout << "Std Dev: " << histo->GetStdDev() << endl;
-bin = 8;
+int bin = 8;
 cout << histo->GetBinContent(bin) << " events have " << histo->GetBinLowEdge(bin)  << " counts " << endl;
 
 // Plot histogram

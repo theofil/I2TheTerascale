@@ -1,5 +1,5 @@
-# input files downloaded by makePlot.C (see README)
-code/C/data/
+# input files downloaded by makePlot.C, in any folder (see README)
+data/
 
 # offline zip built for the website
 I2TheTerascaleOffline.zip

@@ -83,7 +83,7 @@ root -l pre-school-exercise.C
 ```
 
 ### Where the input data comes from
-`makePlot.C` reads its 9 input files from `code/C/data/`. If a file is not there (for example, after a `git clone` of this repository), the first run downloads it (about 34 MB in total) and later runs read it from disk, also offline. To read the files from the web on every run instead, set `downloadOnce = false` near the top of `makePlot.C`.
+`makePlot.C` reads its 9 input files from `code/C/data/`. It looks for `data/` in the folder you run it from and in its parent folders, so a copy of `makePlot.C` in a subfolder such as `code/C/myAnalysis/` uses the same files without downloading them again. If a file is not there (for example, after a `git clone` of this repository), the first run downloads it (about 34 MB in total) and later runs read it from disk, also offline. To read the files from the web on every run instead, set `downloadOnce = false` near the top of `makePlot.C`.
 
 > [!WARNING]
 > One possible failure: a Windows ROOT that can't read https addresses. In that case, students can save the 9 files into `code/C/data/` with a browser.

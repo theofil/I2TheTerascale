@@ -3,9 +3,10 @@
 //
 //    root makePlot.C
 //
-// The input files are read from the folder ../data/ (shared with ../makePlot.C) if they are there.
-// If not, the first run downloads them (~34 MB) into ../data/ and later runs read them from disk,
-// also offline. Set downloadOnce = false below to read them from the web on every run instead.
+// The input files are read from a folder data/ that has all of them, looked for in the current folder
+// and then in its parent folders, so ../data/ (shared with ../makePlot.C) is found. If there is none,
+// the first run downloads them (~34 MB) into ../data/ and later runs read them from disk, also
+// offline. Set downloadOnce = false below to read them from the web on every run instead.
 //
 // --- other options
 // a) compile it with ACLiC use
@@ -55,11 +56,12 @@ string labels[] = {"Data", "QCD", "WJets", "Single Top", "WW", "TTbar", "WZ", "Z
 int fillColors[] ={  1   , 6    , 3      , 4           , 9   , 2      , 7   , 8   , 5};
 int lineColors[] ={  1   , 6    , 3      , 4           , 9   , 2      , 7   , 8   , 5};
 
-// input files: a local copy in localDir is always used if it exists, otherwise
-//   downloadOnce = true  -> download it once into localDir, then read it from disk (works offline afterwards)
-//   downloadOnce = false -> read it directly from the web on every run (needs internet)
+// input files: the nearest folder data/ that has all of them (in the current folder or a parent folder)
+// is used if there is one; otherwise a file missing from localDir is
+//   downloadOnce = true  -> downloaded once into localDir, then read from disk (works offline afterwards)
+//   downloadOnce = false -> read directly from the web on every run (needs internet)
 bool   downloadOnce = true;
-string localDir     = "../data/"; // folder for the local copies, must end with /
+string localDir     = "../data/"; // where missing files are downloaded, must end with /
 string path         = "https://theofil.web.cern.ch/theofil/cmsod/files/";
 
 // pointers to TFile and TTrees
@@ -518,11 +520,34 @@ void init(TTree *events)
    events->SetBranchAddress("EventWeight",&EventWeight);
 }
 
-// open the sample fileName: use the local copy in localDir if it exists, otherwise
-// download it once into localDir (downloadOnce = true) or read it from the web (downloadOnce = false)
+// look for a folder data/ that has all input files, first in the current folder and then in its
+// parent folders (so a copy of this macro in a subfolder finds the same files);
+// returns that folder (ending with /), or "" if there is none
+string findDataDir()
+{
+    TString dir = gSystem->WorkingDirectory();
+    for (int level = 0; level < 20; ++level) // 20 is only a safety limit, the loop ends at the top folder
+    {
+        TString dataDir = dir + "/data/";
+        bool complete = true;
+        for (int i = 0; i < nFiles; ++i)
+            if (gSystem->AccessPathName(dataDir + files[i].c_str())) complete = false; // true when the file does NOT exist
+        if (complete) return dataDir.Data();
+
+        TString parent = gSystem->GetDirName(dir);
+        if (parent == dir) break; // reached the top of the file system
+        dir = parent;
+    }
+    return "";
+}
+
+// open the sample fileName: use the copy in the data/ folder found by findDataDir, or in localDir if it
+// is there, otherwise download it once into localDir (downloadOnce = true) or read it from the web (downloadOnce = false)
 TFile *openSample(const string &fileName)
 {
-    string localFile = localDir + fileName;
+    string dir = findDataDir();
+    if (dir.empty()) dir = localDir; // no complete data/ folder found: use (and fill) localDir
+    string localFile = dir + fileName;
     string url       = path + fileName;
 
     bool haveLocalCopy = !gSystem->AccessPathName(localFile.c_str()); // AccessPathName is true when the file does NOT exist

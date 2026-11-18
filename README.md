@@ -64,6 +64,9 @@ root -l makePlot.C
 ```
 
 On macOS, where `wget` is not installed by default, use `curl -LO https://theofil.web.cern.ch/cmsod/I2TheTerascaleOffline.zip` instead.
+On Windows, download the zip with your browser and extract it with right-click → *Extract All*.
+
+The zip already contains the input data in `code/C/data/`, so `root -l makePlot.C` runs without internet.
 
 If the above steps don’t work, attempt to resolve the issue yourself. If you’re unable to find a solution, try creating a simple program by copying and pasting the code from [`pre-school-exercise.C`](code/C/pre-school-exercise.C) into a local file on your computer using a text editor (e.g., gedit, nano, vim, emacs, etc.).
 
@@ -78,6 +81,22 @@ and execute:
 ```bash
 root -l pre-school-exercise.C
 ```
+
+### Where the input data comes from
+`makePlot.C` reads its 9 input files from `code/C/data/`. If a file is not there (for example, after a `git clone` of this repository), the first run downloads it (about 34 MB in total) and later runs read it from disk, also offline. To read the files from the web on every run instead, set `downloadOnce = false` near the top of `makePlot.C`.
+
+> [!WARNING]
+> One possible failure: a Windows ROOT that can't read https addresses. In that case, students can save the 9 files into `code/C/data/` with a browser.
+>
+> [data.root](https://theofil.web.cern.ch/theofil/cmsod/files/data.root),
+> [qcd.root](https://theofil.web.cern.ch/theofil/cmsod/files/qcd.root),
+> [wjets.root](https://theofil.web.cern.ch/theofil/cmsod/files/wjets.root),
+> [single_top.root](https://theofil.web.cern.ch/theofil/cmsod/files/single_top.root),
+> [ww.root](https://theofil.web.cern.ch/theofil/cmsod/files/ww.root),
+> [ttbar.root](https://theofil.web.cern.ch/theofil/cmsod/files/ttbar.root),
+> [wz.root](https://theofil.web.cern.ch/theofil/cmsod/files/wz.root),
+> [zz.root](https://theofil.web.cern.ch/theofil/cmsod/files/zz.root),
+> [dy.root](https://theofil.web.cern.ch/theofil/cmsod/files/dy.root)
 
 ---
 

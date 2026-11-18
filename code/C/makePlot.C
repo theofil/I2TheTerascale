@@ -3,7 +3,9 @@
 //
 //    root makePlot.C
 //
-// [default way to run the script, will download anything it needs] 
+// The input files are read from the folder data/ if they are there. If not, the first run
+// downloads them (~34 MB) into data/ and later runs read them from disk, also offline.
+// Set downloadOnce = false below to read them from the web on every run instead.
 //
 // --- other options
 //
@@ -45,6 +47,7 @@
 #include "TCanvas.h"
 #include "TTree.h"
 #include "TStyle.h"
+#include "TSystem.h"
 
 
 using namespace std;
@@ -65,7 +68,13 @@ string files[]  = {"data.root", "qcd.root", "wjets.root", "single_top.root", "ww
 string labels[] = {"Data", "QCD", "WJets", "Single Top", "WW", "TTbar", "WZ", "ZZ",  "DY"};
 int fillColors[] ={  1   , 6    , 3      , 4           , 9   , 2      , 7   , 8   , 5};
 int lineColors[] ={  1   , 6    , 3      , 4           , 9   , 2      , 7   , 8   , 5};
-string path = "http://theofil.web.cern.ch/theofil/cmsod/files/";
+
+// input files: a local copy in localDir is always used if it exists, otherwise
+//   downloadOnce = true  -> download it once into localDir, then read it from disk (works offline afterwards)
+//   downloadOnce = false -> read it directly from the web on every run (needs internet)
+bool   downloadOnce = true;
+string localDir     = "data/"; // folder for the local copies, must end with /
+string path         = "https://theofil.web.cern.ch/theofil/cmsod/files/";
 
 // pointers to TFile and TTrees
 TFile *fp[nFiles];
@@ -133,9 +142,10 @@ TLegend *leg;
 TH1F   *h_mc; //last one is for the sum of all MCs
 
 
-// setTDRStyle and init declared here, implemented in the end of this file
-void setTDRStyle(); 
-void init(TTree *events); 
+// setTDRStyle, init and openSample declared here, implemented in the end of this file
+void setTDRStyle();
+void init(TTree *events);
+TFile *openSample(const string &fileName);
 
 
 // store weighted event counts and their error
@@ -166,20 +176,18 @@ void makePlot()
     // loop over files (samples) -- i index
     for(int i = 0; i < nFiles; ++i) 
     {
-        // open root file i, "get" the root ttrees from inside 
-        cout <<"opening "<< files[i] << " from path " << path << endl;   
-
-        string url = path + files[i];
-        fp[i] = TFile::Open(url.c_str(), "READ");
+        // open root file i (local copy or from the web, see openSample), "get" the root ttree from inside
+        fp[i] = openSample(files[i]);
         if (!fp[i] || fp[i]->IsZombie())
         {
-            cout << "ERROR: could not open " << url << " (check your internet connection and the path)" << endl;
+            cout << "ERROR: could not open " << files[i] << " (check your internet connection;"
+                 << " if the copy in " << localDir << " is broken, delete it and run again)" << endl;
             return;
         }
         events[i] = (TTree*)fp[i]->Get("events");
         if (!events[i])
         {
-            cout << "ERROR: no TTree called \"events\" in " << url << endl;
+            cout << "ERROR: no TTree called \"events\" in " << files[i] << endl;
             return;
         }
         init(events[i]);
@@ -513,6 +521,37 @@ void init(TTree *events)
    events->SetBranchAddress("NPrimaryVertices",&NPrimaryVertices);
    events->SetBranchAddress("triggerIsoMu24",&triggerIsoMu24);
    events->SetBranchAddress("EventWeight",&EventWeight);
+}
+
+// open the sample fileName: use the local copy in localDir if it exists, otherwise
+// download it once into localDir (downloadOnce = true) or read it from the web (downloadOnce = false)
+TFile *openSample(const string &fileName)
+{
+    string localFile = localDir + fileName;
+    string url       = path + fileName;
+
+    bool haveLocalCopy = !gSystem->AccessPathName(localFile.c_str()); // AccessPathName is true when the file does NOT exist
+    if (!haveLocalCopy && !downloadOnce)
+    {
+        cout << "reading " << url << " from the web" << endl;
+        return TFile::Open(url.c_str(), "READ");
+    }
+
+    if (!haveLocalCopy)
+    {
+        cout << "downloading " << url << " to " << localFile << endl;
+        gSystem->mkdir(gSystem->GetDirName(localFile.c_str()), kTRUE);
+        string partFile = localFile + ".part"; // renamed only when the download is complete
+        if (!TFile::Cp(url.c_str(), partFile.c_str(), kTRUE))
+        {
+            gSystem->Unlink(partFile.c_str());
+            return nullptr;
+        }
+        if (gSystem->Rename(partFile.c_str(), localFile.c_str()) != 0) return nullptr;
+    }
+
+    cout << "reading local copy " << localFile << endl;
+    return TFile::Open(localFile.c_str(), "READ");
 }
 
 //uncomment the line below if you want to compile makePlot.C

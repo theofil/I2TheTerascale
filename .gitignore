@@ -1,0 +1,14 @@
+# input files downloaded by makePlot.C (see README)
+code/C/data/
+
+# offline zip built for the website
+I2TheTerascaleOffline.zip
+
+# ACLiC build products (root makePlot.C++)
+*_C.so
+*_C.d
+*_ACLiC_dict_rdict.pcm
+
+# local folder 
+.DS_Store
+
